@@ -76,7 +76,7 @@ def import_entries_from_xml(filepath):
 def add_entry_to_user(entry, user_data):
     if entry:
         user_data["entries"].append(entry)
-        print("✅ Entry added successfully.")
+        print(" Entry added successfully.")
 
 
 def load_user_data(username):
@@ -98,7 +98,7 @@ def save_user_data(username, user_data):
     os.makedirs("data", exist_ok=True)
     with open(f"data/{username}.json", "w") as file:
         json.dump(user_data, file, indent=4)
-    print("✅ User data saved successfully.")
+    print(" User data saved successfully.")
 
 def main():
     print("=== Fitness & Nutrition Tracker ===")
