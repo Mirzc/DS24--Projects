@@ -119,7 +119,7 @@ public class Patient implements Comparable<Patient> {
             System.out.println("Please select an option from the following menu:");
             System.out.println("1. Manage Patients Records");
             System.out.println("2. Manage Emergency Queue");
-            System.out.println("3. Treatement History");
+            System.out.println("3. Treatment History");
             System.out.println("4. Doctor Assignments");
             System.out.println("5. Exit");
             int choice = scanner.nextInt();
