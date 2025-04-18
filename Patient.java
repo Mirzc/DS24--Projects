@@ -6,6 +6,7 @@
  * 
  */
 
+import java.util.HashMap;
 import java.util.LinkedList; // dont use this for patients only for medical history
 import java.util.Scanner;
 import java.util.PriorityQueue;
@@ -113,6 +114,7 @@ public class Patient implements Comparable<Patient> {
 
         Scanner scanner = new Scanner(System.in); // scanner setup
         EmergencyQueue emergencyQueue = new EmergencyQueue(); // emergency queue setup
+        DoctorAssignments doctorAssignments = new DoctorAssignments();
 
         while (true) {
             System.out.println("\n Welcome to DS242 Hospital Management System.\n");
@@ -302,14 +304,59 @@ public class Patient implements Comparable<Patient> {
 
                     }
                 }
-            } else if (choice == 3) { // TODO: setup for treatment history // Add treatment history options here --
-                                      // coded by Abdullah?
+            } else if (choice == 3) { // Hussain
                 System.out.println("\nTreatment History: ");
 
-            } else if (choice == 4) { // TODO: setup for doctor assignment // Add doctors assignment here -- coded by
-                                      // Hussain?
+            } else if (choice == 4) { 
 
                 System.out.println("\nDoctor Assignment: ");
+                boolean inDoctormenu = true;
+                while (inDoctormenu) {
+                    System.out.println("\nDoctor Menu:");
+                    System.out.println("1. Add new Doctor");
+                    System.out.println("2. Retrive Doctor by ID");
+                    System.out.println("3. List all Doctors");
+                    System.out.println("4. Back");
+                    int doctorChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    switch (doctorChoice) {
+                        case 1:
+                        System.out.println("Enter Doctor ID:");
+                        String docID = scanner.nextLine();
+                        System.out.println("Enter Doctor Name:");
+                        String docName = scanner.nextLine();
+                        System.out.println("Enter Department:");
+                        String department = scanner.nextLine();
+                        System.out.println("Enter Schedule:");
+                        String schedule = scanner.nextLine();
+                        Doctor newDoctor = new Doctor(docID, docName, department, schedule);
+                        doctorAssignments.addDoctor(newDoctor);
+                        System.out.println("Doctor Added.");
+
+                        break;
+
+                        case 2:
+                        System.out.println("Enter Docotor ID to search:");
+                        String idToFind = scanner.nextLine();
+                        Doctor found = doctorAssignments.getDoctor(idToFind);
+                        if (found != null){
+                            System.out.println("Found.");
+                        }
+                        else {
+                            System.out.println("Doctor not found.");
+                        }
+                        break;
+                        case 3:
+                            doctorAssignments.listAlldoctors();
+                        break;
+                        case 4:
+                            inDoctormenu = false;
+                            break;
+                        default:
+                        System.out.println("Error.");
+                    }
+                }
             } else if (choice == 5) {
 
                 System.out.println("Exiting"); // setup for exit
@@ -442,3 +489,40 @@ class PatientRecords { // this is for the singly linked list
         }
     }
 }
+
+//Abdullah Alqahtani
+class Doctor {
+    private String doctorID, name, department, schedule;
+    public Doctor(String doctorID, String name, String department, String schedule)
+    {
+        this.doctorID = doctorID;
+        this.name = name;
+        this.department = department;
+        this.schedule = schedule;
+
+    }
+    public String getDoctorID() {return doctorID;}
+    public String getName() {return name;}
+    public String getDepartment() {return department;}
+    public String getSchedule() {return schedule;}
+    @Override
+    public String toString() {
+        return "Doctor ID: " + doctorID + ", Name: " + name + ",Department: "+ department + ",Schedule: " + schedule;
+        }
+    }
+
+    class DoctorAssignments {
+        private HashMap<String, Doctor> doctorTable = new HashMap<>();
+        public void addDoctor(Doctor doctor) {doctorTable.put(doctor.getDoctorID(),doctor);}
+        public Doctor getDoctor(String doctorID) {return  doctorTable.get(doctorID);}
+        public void listAlldoctors() {
+            if (doctorTable.isEmpty()) {
+                System.out.println("No Doctors assigned.");
+                return;
+                
+            }
+            for (Doctor doc : doctorTable.values()){
+                System.out.println(doc);
+            }
+        }
+    }
