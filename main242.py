@@ -100,8 +100,27 @@ def save_user_data(username, user_data):
         json.dump(user_data, file, indent=4)
     print(" User data saved successfully.")
 
+def edit_user_profile(user_data):
+    print("\n   Edit Profile   ")
+    print(f"Current weight: {user_data['weight']}")
+    print(f"Current height: {user_data['height']}")
+    print(f"Current goal: {user_data['goal']}")
+
+    new_weight = input("Please enter New weight or press enter to keep current").strip()
+    new_height = input("Please enter New height or press enter to keep current").strip()
+    new_goal = input("Please enter New goal or press enter to keep current").strip()
+
+    if new_weight:
+                    user_data["weight"] = new_weight
+    if new_height:
+                    user_data["height"] = new_height
+    if new_goal:
+                    user_data["goal"] = new_goal
+
+                    print("Profile Updated")
+
 def main():
-    print("=== Fitness & Nutrition Tracker ===")
+    print(" Fitness & Nutrition Tracker ")
     username = input("Enter your username: ")
     user_data = load_user_data(username)
 
@@ -112,6 +131,8 @@ def main():
         print("3. Import entries from XML")
         print("4. View all entries")
         print("5. Save and Exit")
+        print("6. Edit Profile")
+
 
         choice = input("Your choice: ")
 
@@ -132,15 +153,18 @@ def main():
                 add_entry_to_user(entry, user_data)
 
         elif choice == "4":
-            print("\n--- All Entries ---")
+            print("\n All Entries ")
             for i, entry in enumerate(user_data["entries"], 1):
                 print(f"{i}. {entry}")
 
         elif choice == "5":
             save_user_data(username, user_data)
             print("Goodbye!")
-            break
-
+        
+        elif choice == "6":
+             edit_user_profile(user_data)
+             break
+            
         else:
             print("Invalid choice. Try again.")
 
