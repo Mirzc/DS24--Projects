@@ -2,6 +2,9 @@ import os
 import json
 import csv
 import xml.etree.ElementTree as ET
+from collections import defaultdict, Counter
+from datetime import datetime
+import matplotlib.pyplot as plt
 
 def get_manual_entry():
     entry_type = input("Type of entry (Workout/Meal): ").capitalize()
@@ -118,7 +121,81 @@ def edit_user_profile(user_data):
                     user_data["goal"] = new_goal
 
                     print("Profile Updated")
+                    
+def visCalTrend(entries):
+    daily_data = defaultdict(lambda: {"burned": 0, "consumed": 0})
+    
+    for entry in entries:
+        date = entry["date"]
+        calories = entry["calories"]
+        if entry["type"] == "Workout":
+            daily_data[date]["burned"] += calories
+        elif entry["type"] == "Meal":
+            daily_data[date]["consumed"] += calories
+    
+    sorted_dates = sorted(daily_data.keys(), key=lambda x: datetime.strptime(x, "%Y-%m-%d"))
+    
+    dates = []
+    burned = []
+    consumed = []
+    
+    for date in sorted_dates:
+        dates.append(date)
+        burned.append(daily_data[date]["burned"])
+        consumed.append(daily_data[date]["consumed"])
+        
+    plt.figure(figsize=(10, 5))
+    plt.plot(dates, burned, marker='o', label='Calories Burned')
+    plt.plot(dates, consumed, marker='o', label='Calories Consumed')
+    plt.xlabel("Date")
+    plt.ylabel("Calories")
+    plt.title("Calories Burned vs. Consumed Over Time")
+    plt.xticks(rotation=45)
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+    
+    
+def visCatDist(entries):
+    print("\nCategory Distribution")
+    print("1. Workout Categorie")
+    print("2. Meal Categorie")
 
+    choice = input("Enter A Choice 1 or 2: ").strip()
+
+    if choice == "1":
+        entry_type = "Workout"
+        title = "Workout Category Distribution"
+    elif choice == "2":
+        entry_type = "Meal"
+        title = "Meal Category Distribution"
+    else:
+        print("Wrong Entry.")
+        return
+
+    filtered = []
+    for entry in entries:
+        if entry["type"] == entry_type:
+            filtered.append(entry["category"])
+
+    if not filtered:
+        print("No entries found for selected type.")
+        return
+    counts = Counter(filtered)
+    categories = list(counts.keys())
+    values = list(counts.values())
+    
+    plt.figure(figsize=(8, 5))
+    plt.bar(categories, values)
+    plt.xlabel("Category")
+    plt.ylabel("Number of Entries")
+    plt.title(title)
+    plt.xticks(rotation=30)
+    plt.tight_layout()
+    plt.grid(axis='y')
+    plt.show()
+    
 def main():
     print(" Fitness & Nutrition Tracker ")
     username = input("Enter your username: ")
@@ -130,8 +207,9 @@ def main():
         print("2. Import entries from CSV")
         print("3. Import entries from XML")
         print("4. View all entries")
-        print("5. Save and Exit")
+        print("5. Visualize your data")
         print("6. Edit Profile")
+        print("7. Save and Exit")
 
 
         choice = input("Your choice: ")
@@ -155,19 +233,38 @@ def main():
         elif choice == "4":
             print("\n All Entries ")
             for i, entry in enumerate(user_data["entries"], 1):
-                print(f"{i}. {entry}")
-
+                print(f"\nEntry {i}:")
+                print(f"  Type -Workout/Meal-      : {entry['type']}")
+                print(f"  Category -Cardio/Lunch-  : {entry['category']}")
+                print(f"  Duration/Quantity        : {entry['duration']}")
+                print(f"  Calories Burned/Consumed : {entry['calories']}")
+                print(f"  Date yyyy-mm-dd          : {entry['date']}")
+            
         elif choice == "5":
+            print("1. Calories Burned vs. Consumed")
+            print("2. Category Distribution")
+            visChoice = input("Choose what to visualize 1 or 2: ")
+            
+            if visChoice == "1":
+                visCalTrend(user_data["entries"])
+            elif visChoice == "2":
+                visCatDist(user_data["entries"])
+            else:
+                print("Invalid visualization option.")
+            
+        elif choice == "6":
+             edit_user_profile(user_data)    
+                 
+        elif choice == "7":
             save_user_data(username, user_data)
             print("Goodbye!")
             break
         
-        elif choice == "6":
-             edit_user_profile(user_data)
-             
-            
+        
         else:
             print("Invalid choice. Try again.")
+        
+        
 
 
 if __name__ == "__main__":
