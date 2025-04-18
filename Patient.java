@@ -1,31 +1,64 @@
-import java.util.LinkedList;
-import java.util.Scanner;
+/*
+ *  DS242 Project - Hospital Management System 
+ *  Group Members: Mohammed, Abdullah, Hadi, Hussain
+ * 
+ *  Make sure to keep the patients as a singly linked list not double 
+ * 
+ */
 
-public class Patient {
+import java.util.LinkedList; // dont use this for patients only for medical history
+import java.util.Scanner;
+import java.util.PriorityQueue;
+
+enum Severity { // Setup severity for future triage
+    LOW,
+    MID,
+    HIGH
+}
+
+public class Patient implements Comparable<Patient> {
+
     private int patientID;
     private String name;
     private int age;
-    private String contactinformation;
-    private LinkedList<String> medicalHistory;
-    private static LinkedList<Patient> patientList = new LinkedList<>(); // patient list to be used in the program
+    private String contactInfo;
+    private LinkedList<String> medicalHistory; // double linked list for medical history
+    private Severity severity;
+    private static PatientRecords patientList = new PatientRecords(); // patient singly linked list to be used in the
+                                                                      // program -- required in by the project
 
     public static void addPatient(Patient patient) {
         patientList.add(patient);
     }
 
-    public Patient(int patientID, String name, int age, String contactinformation) { // constructor for patient
+    public Patient(int patientID, String name, int age, String contactInfo) { // constructor for patient
         this.patientID = patientID;
         this.name = name;
         this.age = age;
-        this.contactinformation = contactinformation;
+        this.contactInfo = contactInfo;
         this.medicalHistory = new LinkedList<>();
 
     }
 
+    @Override
+    public int compareTo(Patient other) {
+        return other.severity.compareTo(this.severity); // High severity first
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + patientID + ", Name: " + name + ", Severity: " + severity;
+    }
+
     // getters and setter
+
     public int getPatientID() {
         return patientID;
 
+    }
+
+    public static Patient getPatientByID(int id) {
+        return patientList.searchByID(id);
     }
 
     public String getName() {
@@ -36,8 +69,12 @@ public class Patient {
         return age;
     }
 
-    public String getContactInformation() {
-        return contactinformation;
+    public String getcontactInfo() {
+        return contactInfo;
+    }
+
+    public Severity getSeverity() {
+        return severity;
     }
 
     public void setPatientID(int patientID) {
@@ -52,8 +89,12 @@ public class Patient {
         this.age = age;
     }
 
-    public void setContactInformation(String contactInformation) {
-        this.contactinformation = contactInformation;
+    public void setcontactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
+    }
+
+    public void setSeverity(Severity severity) {
+        this.severity = severity;
     }
 
     public void addMedicalHistory(String history) {
@@ -69,176 +110,234 @@ public class Patient {
 
     // main class
     public static void main(String[] args) {
-        // if we ever need to hard code the data, but currently not needed ---------
-        // delete afterwards
-
-        // Patient p1 = new Patient(123, "John", 25, "123-456-7890");
-        // p1.addMedicalHistory("Fever");
-        // p1.addMedicalHistory("Headache");
-        // p1.displayMedicalHistory();
 
         Scanner scanner = new Scanner(System.in); // scanner setup
+        EmergencyQueue emergencyQueue = new EmergencyQueue(); // emergency queue setup
 
-        while (true) { // loop for options and input
-            System.out.println("\nEnter 1 to add a new patient, 2 to manage existing patients, 3 to exit\n");
+        while (true) {
+            System.out.println("\n Welcome to DS242 Hospital Management System.\n");
+            System.out.println("Please select an option from the following menu:");
+            System.out.println("1. Manage Patients Records");
+            System.out.println("2. Manage Emergency Queue");
+            System.out.println("3. Treatement History");
+            System.out.println("4. Doctor Assignments");
+            System.out.println("5. Exit");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            if (choice == 3) { // to exit
-                System.out.println("Exiting");
-                break;
-            }
-            if (choice == 1) { // new patient
-                System.out.println("Enter patient ID: ");
-                int patientID = scanner.nextInt();
-                scanner.nextLine();
-                System.out.println("Enter name: ");
-                String name = scanner.nextLine();
-                System.out.println("Enter age: ");
-                int age = scanner.nextInt();
-                scanner.nextLine();
-                System.out.println("Enter contact information: ");
-                String contactinformation = scanner.nextLine();
-                Patient patient = new Patient(patientID, name, age, contactinformation);
-                addPatient(patient);
-                System.out.println("Enter medical history (type 'done' to finish):");
-                while (true) {
-                    String history = scanner.nextLine();
-                    if (history.equalsIgnoreCase("done"))
+            if (choice == 1) { // manage patients records
+
+                while (true) { // loop for options and input
+                    System.out.println(
+                            "\nEnter 1 to add a new patient, 2 to manage existing patients, 3 to view all patients, 4 to go back\n");
+                    int menuChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (menuChoice == 4) { // to exit
+                        System.out.println("Exiting");
                         break;
-                    patient.addMedicalHistory(history);
-                }
-
-                System.out.println("\nPatient added successfully.\n");
-
-            } else if (choice == 2) { // existing patients
-                System.out.println("\nManage existing patients\n");
-                System.out.println("Enter patient ID to manage:");
-                int patientIDToManage = scanner.nextInt();
-                scanner.nextLine();
-
-                System.out.println(
-                        "Enter 1 to view patient details, 2 to update information, 3 to remove discharged patients");
-                int manageChoice = scanner.nextInt();
-                scanner.nextLine();
-
-                boolean found = false;
-
-                for (int i = 0; i < patientList.size(); i++) { // loop to update patient menu
-                    Patient patient = patientList.get(i);
-                    if (patient.getPatientID() == patientIDToManage) {
-                        found = true;
-                        if (manageChoice == 1) {
-                            System.out.println("\nViewing patient " + patientIDToManage + " details:\n");
-                            System.out.println("Patient Name: " + patient.getName());
-                            System.out.println("Patient Age: " + patient.getAge());
-                            System.out.println("Contact Information: " + patient.getContactInformation());
-                            System.out.println("Known Medical History:");
-                            patient.displayMedicalHistory();
-                            System.out.println();
-
-                        } else if (manageChoice == 2) {
-                            System.out.println("Update Name: ");
-                            String newName = scanner.nextLine();
-                            System.out.println("Update Age: ");
-                            int newAge = scanner.nextInt();
-                            scanner.nextLine();
-                            System.out.println("Update Contact Information: ");
-                            String newContactInformation = scanner.nextLine();
-                            System.out.println("Enter new history entry (type 'done' to cancel):");
-                            String entry = scanner.nextLine();
-                            if (!entry.equalsIgnoreCase("done")) {
-                                patient.addMedicalHistory(entry);
-                                System.out.println("Medical history updated.");
-                            }
-
-                            patient.setName(newName);
-                            patient.setAge(newAge);
-                            patient.setContactInformation(newContactInformation);
-
-                            System.out.println("\nPatient Information Updated Successfully.\n");
-
-                        } else if (manageChoice == 3) {
-                            patientList.remove(i);
-                            System.out.println("\nRemoving discharged patient " + patientIDToManage + "\n");
-
-                        } else {
-                            System.out.println("Invalid choice");
+                    }
+                    if (menuChoice == 1) { // new patient
+                        System.out.println("Enter patient ID: ");
+                        int patientID = scanner.nextInt();
+                        scanner.nextLine();
+                        System.out.println("Enter name: ");
+                        String name = scanner.nextLine();
+                        System.out.println("Enter age: ");
+                        int age = scanner.nextInt();
+                        scanner.nextLine();
+                        System.out.println("Enter contact information: ");
+                        String contactInfo = scanner.nextLine();
+                        Patient patient = new Patient(patientID, name, age, contactInfo);
+                        addPatient(patient);
+                        System.out.println("Enter medical history (type 'done' to finish):");
+                        while (true) {
+                            String history = scanner.nextLine();
+                            if (history.equalsIgnoreCase("done"))
+                                break;
+                            patient.addMedicalHistory(history);
                         }
 
-                        break; // breaking the loop of updating patients
+                        System.out.println("\nPatient added successfully.\n");
 
+                    } else if (menuChoice == 2) { // existing patients
+                        System.out.println("\nManage existing patients\n");
+                        System.out.println("Enter patient ID to manage:");
+                        int patientIDToManage = scanner.nextInt();
+                        scanner.nextLine();
+
+                        System.out.println(
+                                "Enter 1 to view patient details, 2 to update information, 3 to discharge patient: ");
+                        int manageChoice = scanner.nextInt();
+                        scanner.nextLine();
+
+                        Patient patient = patientList.searchByID(patientIDToManage);
+                        if (patient == null) {
+                            System.out.println("\nPatient Is Not Registered\n");
+                        } else {
+                            switch (manageChoice) {
+                                case 1:
+                                    System.out.println("\nViewing patient " + patientIDToManage + " details:\n");
+                                    System.out.println("Patient Name: " + patient.getName());
+                                    System.out.println("Patient Age: " + patient.getAge());
+                                    System.out.println("Contact Information: " + patient.getcontactInfo());
+                                    System.out.println("Known Medical History:");
+                                    patient.displayMedicalHistory();
+                                    System.out.println();
+                                    break;
+
+                                case 2:
+                                    System.out.println("Update Name: ");
+                                    String newName = scanner.nextLine();
+                                    System.out.println("Update Age: ");
+                                    int newAge = scanner.nextInt();
+                                    scanner.nextLine();
+                                    System.out.println("Update Contact Information: ");
+                                    String newcontactInfo = scanner.nextLine();
+                                    System.out.println("Enter new history entry (type 'done' to cancel):");
+                                    String entry = scanner.nextLine();
+                                    if (!entry.equalsIgnoreCase("done")) {
+                                        patient.addMedicalHistory(entry);
+                                        System.out.println("Medical history updated.");
+                                    }
+
+                                    patient.setName(newName);
+                                    patient.setAge(newAge);
+                                    patient.setcontactInfo(newcontactInfo);
+
+                                    System.out.println("\nPatient Information Updated Successfully.\n");
+                                    break;
+
+                                case 3:
+                                    if (patientList.remove(patientIDToManage)) {
+                                        System.out.println("\nRemoving discharged patient " + patientIDToManage + "\n");
+                                    } else {
+                                        System.out.println("\nFailed to remove patient.\n");
+                                    }
+                                    break; // breaking the loop of updating patients
+
+                                default:
+                                    System.out.println("Invalid choice");
+
+                            }
+
+                        }
+
+                    } else if (menuChoice == 3) {// display all patients -- moved it to this menu instead of later in
+                                                 // the options
+                        System.out.println("\nDisplaying All patients:\n");
+                        patientList.showAll();
+                        continue; // show the menu again
                     }
-
-                }
-                if (!found) { // patient not found prompt
-                    System.out.println("\nPatient Not Found\n");
                 }
 
             }
+
+            else if (choice == 2) { // coded by Hadi - talk to him for errors
+                System.out.println("\nEmergency Queue\n");
+                boolean inMain = true;
+                while (inMain) {
+                    System.out.println("\nEmergency Queue Menu:\n");
+                    System.out.println("1. Add Patient To The Queue");
+                    System.out.println("2. Treat Next Patient");
+                    System.out.println("3. View Next Patient");
+                    System.out.println("4. Is The Queue Empty?");
+                    System.out.println("5. How Many Patients In The Queue");
+                    System.out.println("6. Back");
+                    int emergencyChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    switch (emergencyChoice) {
+
+                        case 1:
+                            System.out.print("Enter Patient ID: ");
+                            int id = scanner.nextInt();
+                            scanner.nextLine();
+                            Patient patient = Patient.getPatientByID(id);
+                            if (patient == null) {
+                                System.out.println("Patient not found. You may need to register the patient first.");
+                                break;
+                            }
+
+                            System.out.print("Set Severity (LOW, MID!!, HIGH!!!): ");
+                            String severityStr = scanner.nextLine().toUpperCase();
+
+                            try {
+                                Severity severity = Severity.valueOf(severityStr);
+                                patient.setSeverity(severity);
+                                emergencyQueue.enqueue(patient);
+                                System.out.println("Patient added to the emergency queue.");
+                            } catch (IllegalArgumentException e) {
+                                System.out.println("Invalid severity. Try again.");
+                            }
+                            break;
+                        case 2:
+                            System.out.println("Treating: " + emergencyQueue.dequeue());
+                            break;
+                        case 3:
+                            if (emergencyQueue.isEmpty()) {
+                                System.out.println("No patients in queue.");
+                            } else {
+                                System.out.println("Next: " + emergencyQueue.peek());
+
+                            }
+                            break;
+                        case 4:
+                            if (emergencyQueue.isEmpty()) {
+                                System.out.println("The emergency queue is now empty.");
+                            } else {
+                                System.out.println("There are patients in the emergency queue.");
+                            }
+                            break;
+                        case 5:
+                            System.out.println(
+                                    "There are " + emergencyQueue.size() + " patients still in the emergency queue.");
+                            break;
+                        case 6:
+                            inMain = false;
+                            System.out.println("Returning to main menu...");
+                            break;
+                        default:
+                            System.out.println("Invalid.");
+
+                    }
+                }
+            } else if (choice == 3) { // TODO: setup for treatment history // Add treatment history options here --
+                                      // coded by Abdullah?
+                System.out.println("\nTreatment History: ");
+
+            } else if (choice == 4) { // TODO: setup for doctor assignment // Add doctors assignment here -- coded by
+                                      // Hussain?
+
+                System.out.println("\nDoctor Assignment: ");
+            } else if (choice == 5) {
+
+                System.out.println("Exiting"); // setup for exit
+                break;
+
+            }
+
         }
         scanner.close(); // makeeeeee suuuuuureee to clooooooooose the scanner
     }
 }
-import java.util.PriorityQueue;
-import java.util.Scanner;
 
-enum Severity {
-    LOW,
-    MID,
-    HIGH
-}
-
-class EmergencyPatient implements Comparable<EmergencyPatient> {
-    private int patientID;
-    private String name;
-    private Severity severity;
-
-    public EmergencyPatient(int patientID, String name, Severity severity) {
-        this.patientID = patientID;
-        this.name = name;
-        this.severity = severity;
-    }
-
-    public int getPatientID() {
-        return patientID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Severity getSeverity() {
-        return severity;
-    }
-
-    @Override
-    public int compareTo(EmergencyPatient other) {
-        return other.severity.compareTo(this.severity);
-    }
-
-    @Override
-    public String toString() {
-        return "Patient ID: " + patientID + ", Name: " + name + ", Severity: " + severity;
-    }
-}
-
-public class EmergencyQueue {
-    private PriorityQueue<EmergencyPatient> triageQueue;
+class EmergencyQueue { // need this after the main class we dont want it before
+    private PriorityQueue<Patient> triageQueue;
 
     public EmergencyQueue() {
         triageQueue = new PriorityQueue<>();
     }
 
-    public void enqueue(EmergencyPatient patient) {
+    public void enqueue(Patient patient) {
         triageQueue.offer(patient);
     }
 
-    public EmergencyPatient dequeue() {
+    public Patient dequeue() {
         return triageQueue.poll();
     }
 
-    public EmergencyPatient peek() {
+    public Patient peek() {
         return triageQueue.peek();
     }
 
@@ -249,58 +348,97 @@ public class EmergencyQueue {
     public int size() {
         return triageQueue.size();
     }
+}
 
-    public static void main(String[] args) {
-        EmergencyQueue emergencyQueue = new EmergencyQueue();
-        Scanner scanner = new Scanner(System.in);
+class PatientRecords { // this is for the singly linked list
 
-        while (true) {
-            System.out.println("\nEmergency Triage System");
-            System.out.println("1. Add Patient");
-            System.out.println("2. Treat Next");
-            System.out.println("3. View Next");
-            System.out.println("4. Is Empty");
-            System.out.println("5. Size");
-            System.out.println("6. Exit");
-            System.out.print("Enter choice: ");
+    private PatientNode head;
+    private PatientNode tail;
+    private int size;
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+    class PatientNode {
+        Patient data;
+        PatientNode next;
 
-            switch (choice) {
-                case 1:
-                    System.out.print("ID: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Name: ");
-                    String name = scanner.nextLine();
-                    System.out.print("Severity (LOW, MID, HIGH): ");
-                    String severityStr = scanner.nextLine().toUpperCase();
-                    try {
-                        Severity severity = Severity.valueOf(severityStr);
-                        emergencyQueue.enqueue(new EmergencyPatient(id, name, severity));
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Invalid Severity.");
-                    }
-                    break;
-                case 2:
-                    System.out.println("Treating: " + emergencyQueue.dequeue());
-                    break;
-                case 3:
-                    System.out.println("Next: " + emergencyQueue.peek());
-                    break;
-                case 4:
-                    System.out.println("Empty: " + emergencyQueue.isEmpty());
-                    break;
-                case 5:
-                    System.out.println("Size: " + emergencyQueue.size());
-                    break;
-                case 6:
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Invalid.");
+        public PatientNode(Patient patient) {
+            this.data = patient;
+            this.next = null;
+        }
+
+        public Patient getPatient() {
+            return data;
+        }
+
+    }
+
+    public PatientRecords() {
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
+    }
+
+    public void add(Patient patient) {
+        PatientNode newNode = new PatientNode(patient);
+        if (head == null) {
+
+            head = newNode;
+            tail = newNode;
+        } else {
+
+            tail.next = newNode;
+            tail = newNode;
+        }
+        size++;
+    }
+
+    public boolean remove(int patientID) {
+        if (head == null)
+            return false;
+
+        if (head.data.getPatientID() == patientID) {
+            head = head.next;
+            if (head == null)
+                tail = null;
+
+            size--;
+            return true;
+        }
+        PatientNode current = head;
+        while (current.next != null && current.next.data.getPatientID() != patientID) {
+            current = current.next;
+        }
+
+        if (current.next != null) {
+            current.next = current.next.next;
+            if (current.next == null)
+                tail = current;
+            size--;
+            return true;
+        }
+
+        return false; // the patient is not found
+    }
+
+    public Patient searchByID(int patientID) {
+        PatientNode current = head;
+        while (current != null) {
+            if (current.data.getPatientID() == patientID) {
+                return current.data;
             }
+            current = current.next;
+        }
+        return null;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public void showAll() {
+        PatientNode current = head;
+        while (current != null) {
+            System.out.println(current.data);
+            current = current.next;
         }
     }
 }
