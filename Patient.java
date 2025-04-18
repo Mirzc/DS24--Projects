@@ -180,3 +180,127 @@ public class Patient {
         scanner.close(); // makeeeeee suuuuuureee to clooooooooose the scanner
     }
 }
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+enum Severity {
+    LOW,
+    MID,
+    HIGH
+}
+
+class EmergencyPatient implements Comparable<EmergencyPatient> {
+    private int patientID;
+    private String name;
+    private Severity severity;
+
+    public EmergencyPatient(int patientID, String name, Severity severity) {
+        this.patientID = patientID;
+        this.name = name;
+        this.severity = severity;
+    }
+
+    public int getPatientID() {
+        return patientID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Severity getSeverity() {
+        return severity;
+    }
+
+    @Override
+    public int compareTo(EmergencyPatient other) {
+        return other.severity.compareTo(this.severity);
+    }
+
+    @Override
+    public String toString() {
+        return "Patient ID: " + patientID + ", Name: " + name + ", Severity: " + severity;
+    }
+}
+
+public class EmergencyQueue {
+    private PriorityQueue<EmergencyPatient> triageQueue;
+
+    public EmergencyQueue() {
+        triageQueue = new PriorityQueue<>();
+    }
+
+    public void enqueue(EmergencyPatient patient) {
+        triageQueue.offer(patient);
+    }
+
+    public EmergencyPatient dequeue() {
+        return triageQueue.poll();
+    }
+
+    public EmergencyPatient peek() {
+        return triageQueue.peek();
+    }
+
+    public boolean isEmpty() {
+        return triageQueue.isEmpty();
+    }
+
+    public int size() {
+        return triageQueue.size();
+    }
+
+    public static void main(String[] args) {
+        EmergencyQueue emergencyQueue = new EmergencyQueue();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\nEmergency Triage System");
+            System.out.println("1. Add Patient");
+            System.out.println("2. Treat Next");
+            System.out.println("3. View Next");
+            System.out.println("4. Is Empty");
+            System.out.println("5. Size");
+            System.out.println("6. Exit");
+            System.out.print("Enter choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("ID: ");
+                    int id = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("Name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Severity (LOW, MID, HIGH): ");
+                    String severityStr = scanner.nextLine().toUpperCase();
+                    try {
+                        Severity severity = Severity.valueOf(severityStr);
+                        emergencyQueue.enqueue(new EmergencyPatient(id, name, severity));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid Severity.");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Treating: " + emergencyQueue.dequeue());
+                    break;
+                case 3:
+                    System.out.println("Next: " + emergencyQueue.peek());
+                    break;
+                case 4:
+                    System.out.println("Empty: " + emergencyQueue.isEmpty());
+                    break;
+                case 5:
+                    System.out.println("Size: " + emergencyQueue.size());
+                    break;
+                case 6:
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid.");
+            }
+        }
+    }
+}
