@@ -160,10 +160,11 @@ def main():
         elif choice == "5":
             save_user_data(username, user_data)
             print("Goodbye!")
+            break
         
         elif choice == "6":
              edit_user_profile(user_data)
-             break
+             
             
         else:
             print("Invalid choice. Try again.")
