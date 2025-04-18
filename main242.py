@@ -140,7 +140,7 @@ def main():
             entry = get_manual_entry()
             add_entry_to_user(entry, user_data)
 
-        elif choice == "2":
+        elif choice ==  "2":
             path = input("Enter CSV file path: ")
             entries = import_entries_from_csv(path)
             for entry in entries:
