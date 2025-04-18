@@ -1,0 +1,238 @@
+{
+    "weight": "67",
+    "height": "175",
+    "goal": "70",
+    "entries": [
+        {
+            "type": "Workout",
+            "category": "Cardio",
+            "duration": "90",
+            "calories": 300,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Lunch",
+            "duration": "1",
+            "calories": 472,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Workout",
+            "category": "Strength",
+            "duration": "60",
+            "calories": 250,
+            "date": "2025-04-17"
+        },
+        {
+            "type": "Workout",
+            "category": "Cardio",
+            "duration": "25",
+            "calories": 120,
+            "date": "2025-04-16"
+        },
+        {
+            "type": "Meal",
+            "category": "Dinner",
+            "duration": "2",
+            "calories": 700,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Breakfast",
+            "duration": "1",
+            "calories": 200,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Breakfast",
+            "duration": "1",
+            "calories": 300,
+            "date": "2025-04-17"
+        },
+        {
+            "type": "Meal",
+            "category": "lunch",
+            "duration": "2",
+            "calories": 400,
+            "date": "2025-04-16"
+        },
+        {
+            "type": "Workout",
+            "category": "HIIT",
+            "duration": "45",
+            "calories": 350,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Meal",
+            "category": "Snack",
+            "duration": "1",
+            "calories": 150,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Meal",
+            "category": "Lunch",
+            "duration": "1.5",
+            "calories": 530,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Workout",
+            "category": "Cardio",
+            "duration": "90",
+            "calories": 300,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Lunch",
+            "duration": "1",
+            "calories": 472,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Workout",
+            "category": "Strength",
+            "duration": "60",
+            "calories": 250,
+            "date": "2025-04-17"
+        },
+        {
+            "type": "Workout",
+            "category": "Yoga",
+            "duration": "25",
+            "calories": 120,
+            "date": "2025-04-16"
+        },
+        {
+            "type": "Meal",
+            "category": "Dinner",
+            "duration": "2",
+            "calories": 700,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Breakfast",
+            "duration": "1",
+            "calories": 200,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Breakfast",
+            "duration": "1",
+            "calories": 300,
+            "date": "2025-04-17"
+        },
+        {
+            "type": "Meal",
+            "category": "Lunch",
+            "duration": "2",
+            "calories": 400,
+            "date": "2025-04-16"
+        },
+        {
+            "type": "Workout",
+            "category": "HIIT",
+            "duration": "45",
+            "calories": 350,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Meal",
+            "category": "Snack",
+            "duration": "1",
+            "calories": 150,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Meal",
+            "category": "Lunch",
+            "duration": "1.5",
+            "calories": 530,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Workout",
+            "category": "Cardio",
+            "duration": "90",
+            "calories": 300,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Lunch",
+            "duration": "1",
+            "calories": 472,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Workout",
+            "category": "Strength",
+            "duration": "60",
+            "calories": 250,
+            "date": "2025-04-17"
+        },
+        {
+            "type": "Workout",
+            "category": "Yoga",
+            "duration": "25",
+            "calories": 120,
+            "date": "2025-04-16"
+        },
+        {
+            "type": "Meal",
+            "category": "Dinner",
+            "duration": "2",
+            "calories": 700,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Breakfast",
+            "duration": "1",
+            "calories": 200,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Breakfast",
+            "duration": "1",
+            "calories": 300,
+            "date": "2025-04-17"
+        },
+        {
+            "type": "Meal",
+            "category": "Lunch",
+            "duration": "2",
+            "calories": 400,
+            "date": "2025-04-16"
+        },
+        {
+            "type": "Workout",
+            "category": "HIIT",
+            "duration": "45",
+            "calories": 350,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Meal",
+            "category": "Snack",
+            "duration": "1",
+            "calories": 150,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Meal",
+            "category": "Lunch",
+            "duration": "1.5",
+            "calories": 530,
+            "date": "2025-04-19"
+        }
+    ]
+}

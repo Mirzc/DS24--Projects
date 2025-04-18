@@ -1,0 +1,30 @@
+<entries>
+    <entry>
+        <type>Workout</type>
+        <category>Yoga</category>
+        <duration>40</duration>
+        <calories>120</calories>
+        <date>2025-04-18</date>
+    </entry>
+    <entry>
+        <type>Meal</type>
+        <category>Smoothie</category>
+        <duration>1</duration>
+        <calories>180</calories>
+        <date>2025-04-18</date>
+    </entry>
+    <entry>
+        <type>Meal</type>
+        <category>Salad</category>
+        <duration>1</duration>
+        <calories>220</calories>
+        <date>2025-04-19</date>
+    </entry>
+    <entry>
+        <type>Workout</type>
+        <category>Pilates</category>
+        <duration>45</duration>
+        <calories>170</calories>
+        <date>2025-04-19</date>
+    </entry>
+</entries>

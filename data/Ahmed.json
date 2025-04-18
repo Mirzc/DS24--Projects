@@ -1,0 +1,35 @@
+{
+    "weight": "85",
+    "height": "180",
+    "goal": "78",
+    "entries": [
+        {
+            "type": "Workout",
+            "category": "Strength",
+            "duration": "60",
+            "calories": 400,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Workout",
+            "category": "Cardio",
+            "duration": "30",
+            "calories": 200,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Meal",
+            "category": "Breakfast",
+            "duration": "1",
+            "calories": 450,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Meal",
+            "category": "Lunch",
+            "duration": "2",
+            "calories": 650,
+            "date": "2025-04-19"
+        }
+    ]
+}

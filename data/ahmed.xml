@@ -1,0 +1,30 @@
+<entries>
+    <entry>
+        <type>Workout</type>
+        <category>Strength</category>
+        <duration>60</duration>
+        <calories>400</calories>
+        <date>2025-04-18</date>
+    </entry>
+    <entry>
+        <type>Workout</type>
+        <category>Cardio</category>
+        <duration>30</duration>
+        <calories>200</calories>
+        <date>2025-04-19</date>
+    </entry>
+    <entry>
+        <type>Meal</type>
+        <category>Breakfast</category>
+        <duration>1</duration>
+        <calories>450</calories>
+        <date>2025-04-19</date>
+    </entry>
+    <entry>
+        <type>Meal</type>
+        <category>Lunch</category>
+        <duration>2</duration>
+        <calories>650</calories>
+        <date>2025-04-19</date>
+    </entry>
+</entries>

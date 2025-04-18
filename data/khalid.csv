@@ -1,0 +1,12 @@
+type,category,duration,calories,date
+Workout,Cardio,90,300,2025-04-18
+Meal,Lunch,1,472,2025-04-18
+Workout,Strength,60,250,2025-04-17
+Workout,Yoga,25,120,2025-04-16
+Meal,Dinner,2,700,2025-04-18
+Meal,Breakfast,1,200,2025-04-18
+Meal,Breakfast,1,300,2025-04-17
+Meal,Lunch,2,400,2025-04-16
+Workout,HIIT,45,350,2025-04-19
+Meal,Snack,1,150,2025-04-19
+Meal,Lunch,1.5,530,2025-04-19

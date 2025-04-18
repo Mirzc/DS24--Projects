@@ -220,13 +220,15 @@ def main():
 
         elif choice ==  "2":
             path = input("Enter CSV file path: ")
-            entries = import_entries_from_csv(path)
+            full_path = f"data/{path}"
+            entries = import_entries_from_csv(full_path)
             for entry in entries:
                 add_entry_to_user(entry, user_data)
 
         elif choice == "3":
             path = input("Enter XML file path: ")
-            entries = import_entries_from_xml(path)
+            full_path = f"data/{path}"
+            entries = import_entries_from_xml(full_path)
             for entry in entries:
                 add_entry_to_user(entry, user_data)
 
