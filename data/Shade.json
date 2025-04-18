@@ -1,0 +1,21 @@
+{
+    "weight": "67",
+    "height": "175",
+    "goal": "70",
+    "entries": [
+        {
+            "type": "Workout",
+            "category": "Cardio",
+            "duration": "90",
+            "calories": 300,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Lunch",
+            "duration": "1",
+            "calories": 472,
+            "date": "2025-04-18"
+        }
+    ]
+}

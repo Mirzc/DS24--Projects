@@ -109,9 +109,9 @@ def edit_user_profile(user_data):
     print(f"Current height: {user_data['height']}")
     print(f"Current goal: {user_data['goal']}")
 
-    new_weight = input("Please enter New weight or press enter to keep current").strip()
-    new_height = input("Please enter New height or press enter to keep current").strip()
-    new_goal = input("Please enter New goal or press enter to keep current").strip()
+    new_weight = input("Please enter New weight or press enter to keep current: ").strip()
+    new_height = input("Please enter New height or press enter to keep current: ").strip()
+    new_goal = input("Please enter New goal or press enter to keep current: ").strip()
 
     if new_weight:
                     user_data["weight"] = new_weight
