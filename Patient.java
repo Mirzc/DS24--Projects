@@ -10,6 +10,7 @@
 import java.util.HashMap;
 import java.util.LinkedList; // dont use this for patients only for medical history
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.PriorityQueue;
 
 enum Severity { // Setup severity for future triage
@@ -486,6 +487,94 @@ class PatientRecords { // this is for the singly linked list
         while (current != null) {
             System.out.println(current.data);
             current = current.next;
+        }
+    }
+}
+
+// Hussain Alsaleh
+class TreatmentHistory {
+    private Stack<String> treatmentStack;
+
+    public TreatmentHistory() {
+        treatmentStack = new Stack<>();
+    }
+
+    public void addTreatment(String treatment) {
+        treatmentStack.push(treatment);
+    }
+
+    public String viewLastTreatment() {
+        if (treatmentStack.isEmpty()) {
+            return "No treatments found.";
+        }
+        return treatmentStack.peek();
+    }
+
+    public void showAllTreatments() {
+        if (treatmentStack.isEmpty()) {
+            System.out.println("No treatment history.");
+            return;
+        }
+
+        System.out.println("Treatment History:");
+        for (String treatment : treatmentStack) {
+            System.out.println("- " + treatment);
+        }
+    }
+
+    public boolean isEmpty() {
+        return treatmentStack.isEmpty();
+    }
+}
+private TreatmentHistory treatmentHistory = new TreatmentHistory();
+public TreatmentHistory getTreatmentHistory() {
+    return treatmentHistory;
+}
+else if (choice == 3) { // Hussain
+    System.out.println("\nTreatment History:");
+
+    System.out.println("Enter patient ID to manage treatment history:");
+    int id = scanner.nextInt();
+    scanner.nextLine();
+
+    Patient patient = Patient.getPatientByID(id);
+    if (patient == null) {
+        System.out.println("Patient not found.");
+        continue;
+    }
+
+    boolean inTreatmentMenu = true;
+    while (inTreatmentMenu) {
+        System.out.println("\nTreatment History Menu:");
+        System.out.println("1. Add New Treatment");
+        System.out.println("2. View Last Treatment");
+        System.out.println("3. Show All Treatments");
+        System.out.println("4. Back");
+        int treatmentChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (treatmentChoice) {
+            case 1:
+                System.out.println("Enter treatment description:");
+                String treatment = scanner.nextLine();
+                patient.getTreatmentHistory().addTreatment(treatment);
+                System.out.println("Treatment added.");
+                break;
+
+            case 2:
+                System.out.println("Last treatment: " + patient.getTreatmentHistory().viewLastTreatment());
+                break;
+
+            case 3:
+                patient.getTreatmentHistory().showAllTreatments();
+                break;
+
+            case 4:
+                inTreatmentMenu = false;
+                break;
+
+            default:
+                System.out.println("Invalid choice. Try again.");
         }
     }
 }
