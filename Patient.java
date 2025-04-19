@@ -1,5 +1,5 @@
 /*
- *  DS242 Project - Hospital Management System 
+ *  DS240 Project - Hospital Management System 
  *  Group Members: Mohammed, Abdullah, Hadi, Hussain
  * 
  *  Make sure to keep the patients as a singly linked list not double 
@@ -80,6 +80,15 @@ public class Patient implements Comparable<Patient> {
         return severity;
     }
 
+    private TreatmentHistory treatmentHistory = new TreatmentHistory();
+    {
+
+    }
+
+    public TreatmentHistory getTreatmentHistory() {
+        return treatmentHistory;
+    }
+
     public void setPatientID(int patientID) {
         this.patientID = patientID;
     }
@@ -119,7 +128,7 @@ public class Patient implements Comparable<Patient> {
         DoctorAssignments doctorAssignments = new DoctorAssignments();
 
         while (true) {
-            System.out.println("\n Welcome to DS242 Hospital Management System.\n");
+            System.out.println("\n Welcome to DS240 Hospital Management System.\n");
             System.out.println("Please select an option from the following menu:");
             System.out.println("1. Manage Patients Records");
             System.out.println("2. Manage Emergency Queue");
@@ -198,11 +207,14 @@ public class Patient implements Comparable<Patient> {
                                     scanner.nextLine();
                                     System.out.println("Update Contact Information: ");
                                     String newcontactInfo = scanner.nextLine();
-                                    System.out.println("Enter new history entry (type 'done' to cancel):");
-                                    String entry = scanner.nextLine();
-                                    if (!entry.equalsIgnoreCase("done")) {
+                                    System.out.println("Update Medical History (type 'done' to cancel):");
+                                    while (true) {
+                                        String entry = scanner.nextLine();
+                                        if (entry.equalsIgnoreCase("done"))
+                                            break;
                                         patient.addMedicalHistory(entry);
-                                        System.out.println("Medical history updated.");
+
+                                        System.out.println("Medical history added. Type 'done' to cancel.");
                                     }
 
                                     patient.setName(newName);
@@ -307,9 +319,54 @@ public class Patient implements Comparable<Patient> {
                     }
                 }
             } else if (choice == 3) { // Hussain
-                System.out.println("\nTreatment History: ");
+                System.out.println("\nTreatment History:");
 
-            } else if (choice == 4) {
+                System.out.println("Enter patient ID to manage treatment history:");
+                int id = scanner.nextInt();
+                scanner.nextLine();
+
+                Patient patient = Patient.getPatientByID(id);
+                if (patient == null) {
+                    System.out.println("Patient not found.");
+                    continue;
+                }
+
+                boolean inTreatmentMenu = true;
+                while (inTreatmentMenu) {
+                    System.out.println("\nTreatment History Menu:");
+                    System.out.println("1. Add New Treatment");
+                    System.out.println("2. View Last Treatment");
+                    System.out.println("3. Show All Treatments");
+                    System.out.println("4. Back");
+                    int treatmentChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    switch (treatmentChoice) {
+                        case 1:
+                            System.out.println("Enter treatment description:");
+                            String treatment = scanner.nextLine();
+                            patient.getTreatmentHistory().addTreatment(treatment);
+                            System.out.println("Treatment added.");
+                            break;
+
+                        case 2:
+                            System.out.println("Last treatment: " + patient.getTreatmentHistory().viewLastTreatment());
+                            break;
+
+                        case 3:
+                            patient.getTreatmentHistory().showAllTreatments();
+                            break;
+
+                        case 4:
+                            inTreatmentMenu = false;
+                            break;
+
+                        default:
+                            System.out.println("Invalid choice. Try again.");
+                    }
+                }
+
+            } else if (choice == 4) { // Abdullah
 
                 System.out.println("\nDoctor Assignment: ");
                 boolean inDoctormenu = true;
@@ -343,7 +400,7 @@ public class Patient implements Comparable<Patient> {
                             String idToFind = scanner.nextLine();
                             Doctor found = doctorAssignments.getDoctor(idToFind);
                             if (found != null) {
-                                System.out.println("Found.");
+                                System.out.println("Doctors Information. " + found.toString());
                             } else {
                                 System.out.println("Doctor not found.");
                             }
@@ -526,58 +583,6 @@ class TreatmentHistory {
         return treatmentStack.isEmpty();
     }
 }
-private TreatmentHistory treatmentHistory = new TreatmentHistory();
-public TreatmentHistory getTreatmentHistory() {
-    return treatmentHistory;
-}
-else if (choice == 3) { // Hussain
-    System.out.println("\nTreatment History:");
-
-    System.out.println("Enter patient ID to manage treatment history:");
-    int id = scanner.nextInt();
-    scanner.nextLine();
-
-    Patient patient = Patient.getPatientByID(id);
-    if (patient == null) {
-        System.out.println("Patient not found.");
-        continue;
-    }
-
-    boolean inTreatmentMenu = true;
-    while (inTreatmentMenu) {
-        System.out.println("\nTreatment History Menu:");
-        System.out.println("1. Add New Treatment");
-        System.out.println("2. View Last Treatment");
-        System.out.println("3. Show All Treatments");
-        System.out.println("4. Back");
-        int treatmentChoice = scanner.nextInt();
-        scanner.nextLine();
-
-        switch (treatmentChoice) {
-            case 1:
-                System.out.println("Enter treatment description:");
-                String treatment = scanner.nextLine();
-                patient.getTreatmentHistory().addTreatment(treatment);
-                System.out.println("Treatment added.");
-                break;
-
-            case 2:
-                System.out.println("Last treatment: " + patient.getTreatmentHistory().viewLastTreatment());
-                break;
-
-            case 3:
-                patient.getTreatmentHistory().showAllTreatments();
-                break;
-
-            case 4:
-                inTreatmentMenu = false;
-                break;
-
-            default:
-                System.out.println("Invalid choice. Try again.");
-        }
-    }
-}
 
 // Abdullah Alqahtani
 class Doctor {
@@ -609,7 +614,8 @@ class Doctor {
 
     @Override
     public String toString() {
-        return "Doctor ID: " + doctorID + ", Name: " + name + ",Department: " + department + ",Schedule: " + schedule;
+        return "Doctor ID: " + doctorID + ", Name: " + name + ", Department: " + department + ", Schedule: "
+                + schedule;
     }
 }
 

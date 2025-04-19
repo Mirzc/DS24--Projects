@@ -9,6 +9,13 @@
             "name": "Patient",
             "request": "launch",
             "mainClass": "Patient",
+            "projectName": "DS24--Projects_86338604"
+        },
+        {
+            "type": "java",
+            "name": "Patient",
+            "request": "launch",
+            "mainClass": "Patient",
             "projectName": "DS24--Projects_9090e787"
         },
         {
