@@ -145,16 +145,12 @@ def visCalTrend(entries):
         consumed.append(daily_data[date]["consumed"])
         
     plt.figure(figsize=(10, 5))
-    plt.plot(dates, burned, marker='o', label='Calories Burned')
-    plt.plot(dates, consumed, marker='o', label='Calories Consumed')
-    plt.xlabel("Date")
-    plt.ylabel("Calories")
-    plt.title("Calories Burned vs. Consumed Over Time")
+    plt.plot(dates, burned, marker='o')
+    plt.plot(dates, consumed, marker='o')
     plt.xticks(rotation=45)
-    plt.legend()
-    plt.grid(True)
     plt.tight_layout()
     plt.show()
+
     
     
 def visCatDist(entries):
@@ -188,13 +184,10 @@ def visCatDist(entries):
     
     plt.figure(figsize=(8, 5))
     plt.bar(categories, values)
-    plt.xlabel("Category")
-    plt.ylabel("Number of Entries")
-    plt.title(title)
     plt.xticks(rotation=30)
     plt.tight_layout()
-    plt.grid(axis='y')
     plt.show()
+
     
 def main():
     print(" Fitness & Nutrition Tracker ")

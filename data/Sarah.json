@@ -1,5 +1,5 @@
 {
-    "weight": "60",
+    "weight": "58",
     "height": "165",
     "goal": "Maintain",
     "entries": [
@@ -21,6 +21,97 @@
             "type": "Meal",
             "category": "Salad",
             "duration": "1 bowl",
+            "calories": 220,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Workout",
+            "category": "Pilates",
+            "duration": "45",
+            "calories": 170,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Workout",
+            "category": "Yoga",
+            "duration": "40",
+            "calories": 120,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Smoothie",
+            "duration": "1",
+            "calories": 180,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Salad",
+            "duration": "1",
+            "calories": 220,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Workout",
+            "category": "Pilates",
+            "duration": "45",
+            "calories": 170,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Workout",
+            "category": "Yoga",
+            "duration": "40",
+            "calories": 120,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Smoothie",
+            "duration": "1",
+            "calories": 180,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Salad",
+            "duration": "1",
+            "calories": 220,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Workout",
+            "category": "Pilates",
+            "duration": "45",
+            "calories": 170,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Meal",
+            "category": "Snack",
+            "duration": "1 dish",
+            "calories": 230,
+            "date": "2025-04-19"
+        },
+        {
+            "type": "Workout",
+            "category": "Yoga",
+            "duration": "40",
+            "calories": 120,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Smoothie",
+            "duration": "1",
+            "calories": 180,
+            "date": "2025-04-18"
+        },
+        {
+            "type": "Meal",
+            "category": "Salad",
+            "duration": "1",
             "calories": 220,
             "date": "2025-04-19"
         },
